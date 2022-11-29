@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-    int n, max; int num = 0; float a;
+    int n, max; int count = 0; float a;
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
@@ -19,9 +19,9 @@ int main()
         a = sin(n + (i/n));
         if (a == max)
         {
-            num += 1;
+            count += 1;
         }
     }
-    cout << num << endl;
+    cout << "Максимальный элемент "<< max << "Его количество" << count << endl;
     return 0;
 }

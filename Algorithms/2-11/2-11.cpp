@@ -8,7 +8,7 @@ int main()
     bool minusFirst = false;
     cin >> n;
     i = 1;
-    for (int i = 1; i <= n; i++)
+    while (i <= n)
     {
         cin >> tmp;
         if (!plusFirst && !minusFirst)
@@ -27,6 +27,6 @@ int main()
     }
     else
     {
-        cout << "";
+        cout << "Сначала ввели нуль";
     }
 }
