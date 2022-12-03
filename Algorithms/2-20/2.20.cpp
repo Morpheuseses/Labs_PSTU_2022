@@ -4,7 +4,6 @@ using namespace std;
 
 int main()
 {
-    setlocale(LC_ALL,"ru");
     int n, s; float a; bool flag = false;
     cin >> n >> s;
     for (int i = 0; i <= n; i++)

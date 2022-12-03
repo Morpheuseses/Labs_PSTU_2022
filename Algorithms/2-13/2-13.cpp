@@ -14,7 +14,7 @@ int main()
         x1 = (-b + sqrt(d)) / 2;
         x2 = (-b - sqrt(d)) / 2;   
         cout << "x1 = " << x1 << endl;
-        cout << "x2 = " << x1 << endl; 
+        cout << "x2 = " << x2 << endl; 
     }
     if (d == 0)
     {
@@ -25,4 +25,5 @@ int main()
     {
         cout << "Рациональных корней нет" << endl;
     }
+    return 0;
 }
