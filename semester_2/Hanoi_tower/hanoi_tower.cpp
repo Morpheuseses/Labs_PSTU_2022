@@ -18,6 +18,6 @@ void moveTower(int n, char begin, char end, char tmp)
 int main()
 {
     int n = 3; // amount of discs
-    moveTower(n,'A','B','C');
+    moveTower(n,'A','C','B');
     return 0;
 }

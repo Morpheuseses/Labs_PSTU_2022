@@ -12,6 +12,7 @@ void fullarray(int a[][100], int row, int col)
 		}
 	}
 }
+
 void showarray(int a[][100], int row, int col)
 {
 	for (int i = 0; i < row; i++)
@@ -23,6 +24,7 @@ void showarray(int a[][100], int row, int col)
 		cout << endl;
 	}
 }
+
 int main()
 {
 	srand(time(NULL));
@@ -32,15 +34,15 @@ int main()
 	cin >> row >> col;
 	fullarray(a, row, col);
 	int max = -1000000000;
-    cout << "Sums at columns: "
-	for (int j = 0; j < col; j++)
+	cout << "Sums at columns: ";
+	for (int j = 0; j < col - 1; j++)
 	{
 		int sum = 0;
-		for (int i = 0; i < row - j; i++)
+		for (int i = 0; i < row - j - 1; i++)
 		{
 			sum += a[i][j];
 		}
-		for (int i = row; i >= row - j; i--)
+		for (int i = row; i >= row - j - 1; i--)
 		{
 			a[i][j] = 0; // обнуляем элементы, которые не учавствуют в суммировании
 		}

@@ -10,7 +10,7 @@ void showarray(int a[], int size)
 	}
 	cout << endl;
 }
-void fullarray(int a[],int size)
+void fullarray(int a[], int size)
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -19,7 +19,7 @@ void fullarray(int a[],int size)
 }
 void deleteElem(int a[], int size, int index) // not for last one
 {
-	for (int i = index; i < size-1; i++)
+	for (int i = index; i < size - 1; i++)
 	{
 		a[i] = a[i + 1];
 	}
@@ -30,21 +30,21 @@ int main()
 	const int SIZE = 100;
 	int a[SIZE];
 	int N;
-	cout << "Write down a nubmer of element, please: " << endl;
+	cout << "Write down a quantity of element: " << endl;
 	cin >> N;
 	fullarray(a, N);
 	showarray(a, N);
 	// 2 point
-	int k; // номер элемента и количество элементов, которое нужно вычислить 
-	cout << "Enter K - index and count of elements you need to show: " << endl;
+	int k; 
+	cout << "Enter number of element K: " << endl;
 	cin >> k;
 	cout << "2 point: ";
-	for (int i = k, j = 1; j <= k && i >= 0; i--, j++)
+	for (int i = k - 1, j = 1; i >= 0 && j <= N; --i, j++)
 	{
 		cout << a[i] << " ";
 		if (i == 0)
 		{
-			i = N - 1;
+			i = N;
 		}
 	}
 	cout << endl;
@@ -52,15 +52,16 @@ int main()
 	deleteElem(a, N, 0); // удаление первого элемента
 	N -= 1;
 	N -= 1; // удаление последнего элемента 
+	cout << "3 point: ";
 	showarray(a, N);
 	// 4 point 
 	cout << "4 point: ";
-	for (int i = k, j = 1; j <=k && i <= N - 1; i++, j++)
+	for (int i = k - 1, j = 1; i < N && j <= N; ++i, j++)
 	{
 		cout << a[i] << " ";
 		if (i == N - 1)
 		{
-			i = 0;
+			i = -1;
 		}
 	}
 	cout << endl;
