@@ -69,8 +69,11 @@ int main()
 	int k_idx = 0;
 	for (int i = 0; i < cnt && k_idx < k; i++)
 	{
-		tmp[k_idx] = info[i];
-		k_idx++;
+		if(idx[i] == 1)
+		{
+			tmp[k_idx] = info[i];
+			k_idx++;
+		}
 	}
 	cnt = k;
 	f = fopen("tmp.txt", "w");
