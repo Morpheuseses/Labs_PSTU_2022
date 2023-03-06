@@ -2,61 +2,72 @@
 #include<ctime>
 using namespace std;
 
-void fillArray(int** a, int rows, int cols)
+void fillArray(int** arr, int rows, int cols)
 {
     for (int i = 0; i < rows; i++)
-	{
-        for (int j =0; j < cols; j++)
-		arr[i] = rand() % 10;
-	}
-}
-void showArray(int* arr, int size)
-{
-	for (int i = 0; i < size; i++)
-	{
+    {
         for (int j = 0; j < cols; j++)
-		{
-            cout << arr[i] << " ";
+            arr[i][j] = rand() % 10;
+    }
+}
+void showArray(int** arr, int rows, int cols)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            cout << arr[i][j] << " ";
         }
         cout << endl;
-	}
-	cout << endl;
+    }
+    cout << endl;
 }
-int* delMax(int* a, int rows, int cols, int max_i, int max_j)
+void delMax(int** a, int& rows, int& cols, int max_i, int max_j)
 {
-    int** tmp = new int*[row - 1];
-    for (int i = 0; i < row - 1; i++)
+    int** tmp = new int*[rows-1];
+    for (int i = 0; i < rows; i++)
     {
-        tmp = new int[cols-1];
+        tmp[i] = new int[cols-1];
     }
-    for (int i = 0; i < i_max; i++)
+    for (int i = 0; i < rows-1; i++)
     {
-        for (int j = 0; j  <  j_max; j++)
+        for (int j = 0; j < cols-1; j++)
         {
-            tmp[i] = a[i];
+            if (i < max_i and j < max_j)
+            {
+                tmp[i][j] = a[i][j];
+            }
+            if (i > max_i and j < max_j)
+            {
+                tmp[i][j] = a[i+1][j];
+            } 
+            if (i < max_i and j > max_j)
+            {
+                tmp[i][j] = a[i][j + 1];
+            }
+            if (i > max_i and j > max_j)
+            {
+                tmp[i][j] = a[i+1][j+1];
+            }
         }
     }
-    for (int i = i_max + 1; i < row - 1; i++)
-    {
-        for (int j = max_j + 1; j  <  cols - 1; j++)
-        {
-            tmp[i] = a[i];
-        }
-    }
-    return tmp;
+    rows--;
+    cols--;
+    a = tmp;
 }
 int main()
 {
+    srand(time(NULL));
     int rows, cols;
     cout << "Enter rows and columns of array: ";
     cin >> rows >> cols;
-    int** arr = new int*[rows];
+    int** arr = new int* [rows];
     for (int i = 0; i < rows; i++)
     {
         arr[i] = new int[cols];
     }
-    fillArray(a, rows, cols);
-    showArray(a,rows,cols);
+    fillArray(arr, rows, cols);
+    showArray(arr, rows, cols);
     int max = arr[0][0];
     int max_i = 0, max_j = 0;
     for (int i = 0; i < rows; i++)
@@ -71,9 +82,8 @@ int main()
             }
         }
     }
-    arr = delMax(arr, rows, cols, max_i, max_j);
-    rows--; 
-    cols--;
-    showArray(a,rows,cols);
+    delMax(arr, rows, cols, max_i, max_j);
+    showArray(arr, rows, cols);
+    delete[] arr;
     return 0;
 }

@@ -45,8 +45,10 @@ int main()
 	int size = 10;
 	int* a = new int[size];
 	fillArray(a,size);
+	cout << "Before sorting: ";
 	showArray(a, size);
 	shellSort(a, size);
+	cout << "After sorting: ";
 	showArray(a, size);
 	return 0; 
 }
