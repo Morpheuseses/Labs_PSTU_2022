@@ -5,6 +5,7 @@ using namespace std;
 struct ListElem
 {
 	ListElem* next;
+	ListElem* prev;
 	int value;
 };
 
@@ -15,12 +16,14 @@ ListElem* createList(int n)
 	start = new ListElem;
 	cin >> start->value;
 	start->next = nullptr;
+	start->prev = nullptr;
 	p = start;
 	for (int i = 0; i < n - 1; i++)
 	{
 		r = new ListElem;
 		cin >> r->value;
 		r->next = nullptr;
+		r->prev = p;
 		p->next = r;
 		p = r;
 	}
@@ -36,9 +39,18 @@ void addElem(ListElem* list, int elem, int pos, int& size)
 	}
 	pend = px->next;
 	ListElem* tmp = new ListElem;
-	tmp->value = elem;
-	px->next = tmp;
+	if (pos == 1)
+	{
+		tmp->prev = nullptr;
+		tmp->value = elem;
+	}
+	else
+	{
+		tmp->prev = px;
+		px->next = tmp;
+	}
 	tmp->next = pend;
+	
 }
 void deleteElem(ListElem* list, int pos, int& size)
 {
@@ -50,7 +62,6 @@ void deleteElem(ListElem* list, int pos, int& size)
 	}
 	pend = px->next->next;
 	px->next = pend;
-	delete px->next;
 }
 void addElems(ListElem* list, int pos, int& size)
 {
@@ -73,6 +84,7 @@ void addElems(ListElem* list, int pos, int& size)
 		tmp = new ListElem;
 		cin >> value;
 		tmp->value = value;
+		tmp->prev = prev;
 		prev->next = tmp;
 		prev = tmp;
 	}
@@ -95,6 +107,7 @@ void deleteElems(ListElem* list, int pos, int& size)
 		pend =pend->next;
 	}
 	px->next = pend->next;
+	pend->prev = px;
 }
 int main()
 {
