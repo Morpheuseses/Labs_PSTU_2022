@@ -33,19 +33,19 @@ void delMax(int** a, int& rows, int& cols, int max_i, int max_j)
     {
         for (int j = 0; j < cols-1; j++)
         {
-            if (i < max_i and j < max_j)
+            if (i < max_i && j < max_j)
             {
                 tmp[i][j] = a[i][j];
             }
-            if (i > max_i and j < max_j)
+            if (i > max_i && j < max_j)
             {
                 tmp[i][j] = a[i+1][j];
             } 
-            if (i < max_i and j > max_j)
+            if (i < max_i && j > max_j)
             {
                 tmp[i][j] = a[i][j + 1];
             }
-            if (i > max_i and j > max_j)
+            if (i > max_i && j > max_j)
             {
                 tmp[i][j] = a[i+1][j+1];
             }

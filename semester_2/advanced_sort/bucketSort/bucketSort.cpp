@@ -33,9 +33,9 @@ void bucketSort(int* arr)
 
 	int bucketSizes[CNT_B]{ 0 };
 
-	for (int i = 0; i < SIZE_ARRAY; i++) 
+	for (int i = 0; i < SIZE_ARRAY; i++)
 	{
-		if (arr[i] > 10)  
+		if (arr[i] > 10)
 		{
 			buckets[1][bucketSizes[1]] = arr[i];
 			bucketSizes[1]++;
@@ -46,15 +46,19 @@ void bucketSort(int* arr)
 			bucketSizes[0]++;
 		}
 	}
-	for (int i = 0; i < CNT_B; i++) {    // it finally worked
+	for (int i = 0; i < CNT_B; i++) {    
+		int k, tmp;
 		for (int j = 0; j < bucketSizes[i]; j++)
 		{
-			for (int k = j; k > 0 && buckets[i][k - 1] > buckets[i][k]; k--) // important that it must be bucket[i]
+			tmp = buckets[i][j];
+			for (k = j - 1; k >= 0 && buckets[i][k] > tmp; k--)
 			{
-				swap(buckets[i][k - 1], buckets[i][k]); // and here too
+				buckets[i][k + 1] = buckets[i][k];
+				buckets[i][k] = -999;
 			}
+			buckets[i][k + 1] = tmp;
 		}
-	}													// I wasted so much on this. I hate debugging code 
+	}
 	int idx = 0;
 	for (int i = 0; i < CNT_B; i++)
 	{
