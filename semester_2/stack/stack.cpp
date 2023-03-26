@@ -121,11 +121,38 @@ void removElem(Stack*& stack, int pos)
 	}
 	delete tmp;
 }
+void searchElem(Stack*& stack, int value)
+{
+	int pos = stack->size;
+	Stack* curr = new Stack;
+	curr->init();
+	elfind = false;
+	while (stack->top != nullptr)
+	{
+		if (stack->top->data == value)
+		{
+			cout << "Position of element with same value: " << pos << endl;
+			elfind = true;
+		}
+		else
+		{
+			Push(curr, stack->top->data);
+			Pop(stack);
+		}
+		pos--;
+	}
+	while (curr->top != nullptr)
+	{
+		Push(stack, curr->top->data);
+		Pop(curr);
+	}
+	cout << "There no element with the same value " << endl;
+}
 void removElems(Stack*& stack, int pos, int cnt)
 {
 	Stack* tmp = new Stack;
 	tmp->init();
-	int init_size = stack->size; 
+	int init_size = stack->size;
 	for (int i = 1; i < init_size - pos; i++)
 	{
 		Push(tmp, stack->top->data);
@@ -157,69 +184,77 @@ int main()
 	showStack(stack);
 	int choice;
 	cout << "Choose the option:" << endl;
-	cout << "1 - push, 2 - pop, 3 - top, 4 - insertElem, 5 - insertElems, 6 - removElem, 7 - removElems" << endl;
+	cout << "1 - push, 2 - pop, 3 - top, 4 - insertElem, 5 - insertElems, 6 - removElem, 7 - removElems, 8 - find element " << endl;
 	cin >> choice;
 	//system("cls");
 	switch (choice)
 	{
-		case 1:
-		{
-			cout << "Enter data of the element:";
-			cin >> data;
-			Push(stack, data);
-			showStack(stack);
-			break;
-		}
-		case 2:
-		{
-			Pop(stack);
-			showStack(stack);
-			break;
-		}
-		case 3:
-		{
-			cout << "Top data = " << stack->top->data << endl;
-			showStack(stack);
-			break;
-		}
-		case 4:
-		{
-			cout << "Enter position and data of the element, you want to add: ";
-			cin >> pos >> data;
-			insertElem(stack, pos, data);
-			showStack(stack);
-			break;
-		}
-		case 5:
-		{
-			int cnt;
-			cout << "Enter position from which element will be inserted and quantity of them: ";
-			cin >> pos >> cnt;
-			insertElems(stack, pos, cnt);
-			showStack(stack);
-			break;
-		}
-		case 6:
-		{
-			cout << "Enter the position of element you want to remove: ";
-			cin >> pos;
-			removElem(stack, pos);
-			showStack(stack);
-			break;
-		}
-		case 7:
-		{
-			int cnt;
-			cout << "Enter position from which element will be removed and quantity of them: ";
-			cin >> pos >> cnt;
-			removElems(stack, pos, cnt);
-			showStack(stack);
-			break;
-		}
-		default:
-			cout << "Oops, something has gone wrong!" << endl;
-			break;
+	case 1:
+	{
+		cout << "Enter data of the element:";
+		cin >> data;
+		Push(stack, data);
+		showStack(stack);
+		break;
 	}
-	
+	case 2:
+	{
+		Pop(stack);
+		showStack(stack);
+		break;
+	}
+	case 3:
+	{
+		cout << "Top data = " << stack->top->data << endl;
+		showStack(stack);
+		break;
+	}
+	case 4:
+	{
+		cout << "Enter position and data of the element, you want to add: ";
+		cin >> pos >> data;
+		insertElem(stack, pos, data);
+		showStack(stack);
+		break;
+	}
+	case 5:
+	{
+		int cnt;
+		cout << "Enter position from which element will be inserted and quantity of them: ";
+		cin >> pos >> cnt;
+		insertElems(stack, pos, cnt);
+		showStack(stack);
+		break;
+	}
+	case 6:
+	{
+		cout << "Enter the position of element you want to remove: ";
+		cin >> pos;
+		removElem(stack, pos);
+		showStack(stack);
+		break;
+	}
+	case 7:
+	{
+		int cnt;
+		cout << "Enter position from which element will be removed and quantity of them: ";
+		cin >> pos >> cnt;
+		removElems(stack, pos, cnt);
+		showStack(stack);
+		break;
+	}
+	case 8:
+	{
+		int value;
+		cout << "Enter value, which you want to find: ";
+		cin >> value;
+		searchElem(stack, value);
+		break;
+	}
+	default:
+		cout << "Oops, something has gone wrong!" << endl;
+		break;
+	}
+
 	return 0;
 }

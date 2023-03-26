@@ -37,7 +37,7 @@ void Push(Queue*& queue, int data)
 }
 void Pop(Queue*& queue)
 {
-	if (queue->size == 0) 
+	if (queue->size == 0)
 	{
 		return;
 	}
@@ -62,6 +62,33 @@ void insertElem(Queue*& queue, int pos, int data)
 		Pop(queue);
 	}
 	queue = tmp;
+}
+void searchElem(Queue*& queue, int element)
+{
+	Queue* curr = new Queue;
+	curr->init();
+	bool elfind = false;
+	while (queue->front != nullptr && queue->back != nullptr && !elfind)
+	{
+		if (queue->front->data == element)
+		{
+			cout << "Element is here" << endl;
+			elfind = true;
+		}
+		else
+		{
+			Push(curr, queue->front->data);
+			Pop(queue);
+		}
+		
+	}
+	while (queue->size != 0)
+	{
+		Push(curr, queue->front->data);
+		Pop(queue);
+	}
+	queue = curr;
+	cout << "There is no element, with such value" << endl;
 }
 void insertElems(Queue*& queue, int pos, int cnt)
 {
@@ -151,55 +178,63 @@ int main()
 	}
 	showQueue(queue);
 	cout << "Choose the optiion: " << endl;
-	cout << "1 - Push, 2 - Pop, 3 - insertElem, 4 - InsertElems, 5 - remove Elem, 6 - remove Elems " << endl;
+	cout << "1 - Push, 2 - Pop, 3 - insertElem, 4 - InsertElems, 5 - remove Elem, 6 - remove Elems, 7 - find element " << endl;
 	cin >> choice;
 	switch (choice)
 	{
-		case 1:
-		{
-			cout << "Enter data of element, you want to add: ";
-			cin >> data;
-			Push(queue, data);
-			showQueue(queue);
-			break;
-		}
-		case 2:
-		{
-			Pop(queue);
-			showQueue(queue);
-			break;
-		}
-		case 3:
-		{
-			cout << "Enter position and data of an element, you want to insert: ";
-			cin >> pos >> data;
-			insertElem(queue, pos, data);
-			showQueue(queue);
-			break;
-		}
-		case 4:
-		{
-			cout << "Enter position and quantity, you want to insert: ";
-			cin >> pos >> cnt;
-			insertElems(queue, pos, cnt);
-			break;
-		}
-		case 5:
-		{
-			cout << "Enter position of element, which will be removed";
-			cin >> pos;
-			removElem(queue, pos);
-			showQueue(queue);
-			break;
-		}
-		case 6:
-		{
-			cout << "Enter position and quantity of element, which will be removed: ";
-			cin >> pos >> cnt;
-			removElems(queue, pos, cnt);
-			showQueue(queue);
-			break;
-		}
+	case 1:
+	{
+		cout << "Enter data of element, you want to add: ";
+		cin >> data;
+		Push(queue, data);
+		showQueue(queue);
+		break;
+	}
+	case 2:
+	{
+		Pop(queue);
+		showQueue(queue);
+		break;
+	}
+	case 3:
+	{
+		cout << "Enter position and data of an element, you want to insert: ";
+		cin >> pos >> data;
+		insertElem(queue, pos, data);
+		showQueue(queue);
+		break;
+	}
+	case 4:
+	{
+		cout << "Enter position and quantity, you want to insert: ";
+		cin >> pos >> cnt;
+		insertElems(queue, pos, cnt);
+		break;
+	}
+	case 5:
+	{
+		cout << "Enter position of element, which will be removed";
+		cin >> pos;
+		removElem(queue, pos);
+		showQueue(queue);
+		break;
+	}
+	case 6:
+	{
+		cout << "Enter position and quantity of element, which will be removed: ";
+		cin >> pos >> cnt;
+		removElems(queue, pos, cnt);
+		showQueue(queue);
+		break;
+	}
+	case 7:
+	{
+		int value;
+		cin >> value;
+		searchElem(queue, value);
+		showQueue(queue);
+		break;
+	}
 	}
 	return 0;
 }
