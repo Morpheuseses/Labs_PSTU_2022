@@ -59,11 +59,11 @@ void addElem(ListElem*& list, int pos, int data, int& size)
 		ListElem* curr = list;
 		for (int i = 1; i < pos - 1; i++)
 			curr = curr->next;
-		
+
 		elem->prev = curr;
 		elem->next = curr->next;
 		curr->next = elem;
-		
+
 	}
 	size++;
 }
@@ -113,6 +113,22 @@ void addElems(ListElem*& list, int pos, int& size, int cnt)
 		curr->next = start;
 	}
 	size += cnt;
+}
+void searchElem(ListElem* list, int value)
+{
+	int pos = 1;
+	ListElem* curr = list;
+	while (curr->next != nullptr)
+	{
+		if (curr->data == value)
+		{
+			std::cout << "Position of the element, you look for: " << pos << std::endl;
+			return;
+		}
+		curr = curr->next;
+		pos++;
+	}
+	std::cout << "There is no element with such value" << std::endl;
 }
 void removElem(ListElem*& list, int pos, int& size)
 {
@@ -172,7 +188,7 @@ void removElems(ListElem*& list, int pos, int& size, int cnt)
 		curr->next = pend->next;
 		pend->prev = curr;
 	}
-	size-=cnt;
+	size -= cnt;
 }
 void showList(ListElem* list, int size)
 {
@@ -214,6 +230,10 @@ int main()
 	std::cout << "Enter position of an element from which element will be deleted and count of them: ";
 	std::cin >> pos >> cnt;
 	removElems(list, pos, size, cnt);
+	showList(list, size);
+	std::cout << "Enter the value of the element you want know position of: ";
+	std::cin >> data;
+	searchElem(list, data);
 	showList(list, size);
 	return 0;
 }

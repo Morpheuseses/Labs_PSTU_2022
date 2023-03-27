@@ -126,7 +126,7 @@ void searchElem(Stack*& stack, int value)
 	int pos = stack->size;
 	Stack* curr = new Stack;
 	curr->init();
-	elfind = false;
+	bool elfind = false;
 	while (stack->top != nullptr)
 	{
 		if (stack->top->data == value)
