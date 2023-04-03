@@ -126,7 +126,7 @@ struct Hashtable
 				return i;
 			i++;
 		}
-		return NULL;
+		return 0;
 	}
 };
 string getDateofbirth()

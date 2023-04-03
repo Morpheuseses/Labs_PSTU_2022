@@ -25,10 +25,7 @@ public:
 		salary = p.salary;
 		bonus = p.bonus;
 	}
-	~payment()
-	{
-		delete this;
-	}
+	~payment(){}
 	//selectors(getters)
 	string getName()
 	{
