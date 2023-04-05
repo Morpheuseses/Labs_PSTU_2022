@@ -1,17 +1,6 @@
 #include<iostream>
-#include<ctime>
+#include ".\Prog.h"
 using namespace std;
-
-class Prog
-{
-public:
-	float first;
-	int second;
-	float element(int j)
-	{
-		return first * pow(second,j);
-	}
-};
 
 int main()
 {
