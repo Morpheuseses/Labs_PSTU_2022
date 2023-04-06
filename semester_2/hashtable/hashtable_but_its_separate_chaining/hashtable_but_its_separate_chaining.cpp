@@ -158,82 +158,28 @@ string getAdress()
 {
 	return Cities[rand() % 5] + ',' + Street[rand() % 7] + " St." + ',' + to_string(rand() % 15);
 }
-void fillTable(Hashtable*& table, int size)
+int main()
 {
+	int size_array = 40;
+	srand(time(NULL));
+
+	Hashtable* table = new Hashtable;
+	table->init(size_array);
+
 	Human man;
 
-	for (int i = 1; i <= size; i++)
+	for (int i = 1; i <= size_array; i++)
 	{
 		man = createPerson();
 		table->put(table->hashfunc(man.Name), man);
 	}
-}
-int main()
-{
-	srand(time(NULL));
-
-	Hashtable* table = new Hashtable;
-	table->init(40);
-
-	fillTable(table, 40);
 	
 	table->print();
 
 	string key;
-
 	getline(cin,key);
 	cout << key+" " << table->find(key) << endl;
-
 	delete[] table->arr;
-	delete table;
-
 	cout << collisions << endl;
-
-
-
-	cout << "next?" << endl;
-	getline(cin,key);
-	if (key != "1") {return 0;}
-	system("cls");
-
-	table = new Hashtable;
-	table->init(75);
-
-	collisions = 0;
-	fillTable(table, 75);
-	
-	table->print();
-
-	getline(cin,key);
-	cout << key+" " << table->find(key) << endl;
-
-	delete[] table->arr;
-	delete table;
-
-	cout << collisions << endl;
-
-
-
-	cout << "next?" << endl;
-	getline(cin,key);
-	if (key != "1") {return 0;}
-	system("cls");
-
-	table = new Hashtable;
-	table->init(90);
-
-	collisions = 0;
-	fillTable(table, 90);
-	
-	table->print();
-
-	getline(cin,key);
-	cout << key+" " << table->find(key) << endl;
-
-	delete[] table->arr;
-	delete table;
-
-	cout << collisions << endl;
-
 	return 0;
 }
