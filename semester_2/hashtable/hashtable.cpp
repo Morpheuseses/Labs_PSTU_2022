@@ -117,7 +117,7 @@ struct Hashtable
 	}
 	int find(string key)
 	{
-		int index = hashfunc(key) % size;
+		int index = hashfunc(key);
 		if (arr[index].Name == key)
 		{
 			return index;
@@ -230,10 +230,16 @@ int main()
 	getline(cin,key);
 	cout << key+" " << table->find(key) << endl;
 
-	delete[] table->arr;
-	delete table;
-
 	cout << collisions << endl;
 
+	cout << "delete key?" << endl;
+	getline(cin, key);
+	table->remove(key);
+
+	table->print();
+
+	delete[] table->arr;
+	delete table;
+	
 	return 0;
 }

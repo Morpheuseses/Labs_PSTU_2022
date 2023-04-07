@@ -42,60 +42,57 @@ Human createPerson()
 	return person;
 }
 
+struct ListElem
+{
+	int size;
+	ListElem* next;
+	Human data;
+
+	ListElem()
+	{
+		next = nullptr;
+		size = 0;
+	}
+
+
+	void push_back(Human data)
+	{
+		ListElem* tmp = new ListElem;
+		tmp->data = data;
+		tmp->next = nullptr;
+		next = tmp;
+		size++;
+	}
+
+	void remove(int pos)
+	{
+		ListElem* curr = new ListElem;
+		curr = this;
+		for (int i = 0; i < pos - 1; i++)
+		{
+			curr = curr->next;
+		}
+		curr->next = curr->next->next;
+	}
+
+};
+
+
 struct Hashtable
 {
-	Human* arr;
+	ListElem* arr;
 	int size;
 	void init(int size)
 	{
-		arr = new Human[size];
-		for (int i = 0; i < size; i++)
-		{
-			arr[i].init();
-		}
+		arr = new ListElem[size];
+		
 		this->size = size;
 	}
 	void put(int index, Human value) 
 	{
-		// method of open adressing
-		int i = index;
-		if (arr[i].Name == "none")
-		{
-			arr[i] = value;
-			return;
-		}
-		else
-		{
-			collisions++;
-		}
-		i++;
-		while (i != size)
-		{
-			if (arr[i].Name == "none")
-			{
-				arr[i] = value;
-				return;
-			}
-			else
-			{
-				collisions++;
-			}
-			i++;
-		}
-		i = 0;
-		while (i != index)
-		{
-			if (arr[i].Name == "none")
-			{
-				arr[i] = value;
-				return;
-			}
-			else
-			{
-				collisions++;
-			}
-			i++;
-		}
+		// method of separate chaining
+		arr[index].push_back(value);
+		if (arr[index].next != nullptr) {collisions++;}
 		cout << "Element did not fit in the table" << endl; 
 	}
 	int hashfunc(string key)
@@ -111,46 +108,47 @@ struct Hashtable
 	{
 		for (int i = 0; i < size; i++)
 		{
-				arr[i].showData();
-				cout << hashfunc(arr[i].Name)<< endl;
+			ListElem tmp = arr[i];
+			arr[i].data.showData();
+			while (tmp.next != nullptr)
+			{
+				tmp->data.showData();
+				cout << hashfunc(tmp->data.Name)<< endl;
+				tmp = tmp->next;
+			}
 		}
 	}
 	int find(string key)
 	{
-		int index = hashfunc(key) % size;
-		if (arr[index].Name == key)
+		int index = hashfunc(key);
+		int pos = 0;
+		ListElem tmp = arr[index];
+		
+		while (tmp != nullptr)
 		{
-			return index;
-		}
-		int i = index;
-		while (i != size) // Hashtable size = 100 
-		{
-			if (arr[i].Name == key)
-				return i;
-			i++;
-		}
-		i = 0;
-		while (i != index)
-		{
-			if (arr[i].Name == key)
-				return i;
-			i++;
+			if (tmp.data.Name == key)
+				return pos;
+			tmp = tmp.next;
+			pos++;
 		}
 		return -1;
 	}
 	void remove(string key)
 	{
-		int index = find(key);
-		if (index != -1)
+		int pos = find(key);
+		int index = hashfunc(key);
+		if (pos != -1)
 		{
-			arr[index].init();
+			arr[index].remove(pos);
 		}
 	}
 };
+
+
 string getDateofbirth()
 {
 	int day = rand() % 31 + 1;
-	int month = rand() % 12 + 1;
+	int month = rand() % 12 + 1; 
 	int year = 1970 + rand() % 53;
 	return to_string(day) + '.' + to_string(month) + '.' + to_string(year);
 }
@@ -158,28 +156,88 @@ string getAdress()
 {
 	return Cities[rand() % 5] + ',' + Street[rand() % 7] + " St." + ',' + to_string(rand() % 15);
 }
-int main()
+void fillTable(Hashtable*& table, int size)
 {
-	int size_array = 40;
-	srand(time(NULL));
-
-	Hashtable* table = new Hashtable;
-	table->init(size_array);
-
 	Human man;
 
-	for (int i = 1; i <= size_array; i++)
+	for (int i = 1; i <= size; i++)
 	{
 		man = createPerson();
 		table->put(table->hashfunc(man.Name), man);
 	}
+}
+int main()
+{
+	srand(time(NULL));
+
+	Hashtable* table = new Hashtable;
+	table->init(40);
+
+	fillTable(table, 40);
 	
 	table->print();
 
 	string key;
+
 	getline(cin,key);
 	cout << key+" " << table->find(key) << endl;
+
 	delete[] table->arr;
+	delete table;
+
 	cout << collisions << endl;
+
+
+
+	cout << "next?" << endl;
+	getline(cin,key);
+	if (key != "1") {return 0;}
+	system("cls");
+
+	table = new Hashtable;
+	table->init(75);
+
+	collisions = 0;
+	fillTable(table, 75);
+	
+	table->print();
+
+	getline(cin,key);
+	cout << key+" " << table->find(key) << endl;
+
+	delete[] table->arr;
+	delete table;
+
+	cout << collisions << endl;
+
+
+
+	cout << "next?" << endl;
+	getline(cin,key);
+	if (key != "1") {return 0;}
+	system("cls");
+
+	table = new Hashtable;
+	table->init(90);
+
+	collisions = 0;
+	fillTable(table, 90);
+	
+	table->print();
+
+	getline(cin,key);
+	cout << key+" " << table->find(key) << endl;
+
+	cout << collisions << endl;
+
+	cout << "delete key?" << endl;
+	getline(cin, key);
+	table->remove(key);
+
+	table->print();
+
+	delete[] table->arr;
+	delete table;
+
 	return 0;
 }
