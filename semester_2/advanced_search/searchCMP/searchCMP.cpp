@@ -11,18 +11,10 @@ int find(string str, string substr)
 
     int* pref = new int[substrSize];
 
-    int i = 0;
-    int j = -1;
+    int i = 1;
+    int j = 0;
     pref[0] = -1;
 
-    while (i < substrSize - 1)
-    {
-        while ((j >= 0) && (substr[j] != substr[i]))
-        {
-            j = pref[j];
-        }
-        i++;
-        j++;
         if (substr[i] == substr[j])
         {
             pref[i] = pref[j];
@@ -31,8 +23,7 @@ int find(string str, string substr)
         {
             pref[i] = j;
         }
-        i = 0;
-        j = 0;
+
         for (i = 0, j = 0; (i <= strSize - 1) && (j <= substrSize - 1); i++, j++)
         {
             while ((j >= 0) && (substr[j]) != str[i])
@@ -43,7 +34,7 @@ int find(string str, string substr)
         delete[] pref;
         if (j == substrSize) { return i - j; }
         else return -1;
-    }
+    
 }
 
 int main()

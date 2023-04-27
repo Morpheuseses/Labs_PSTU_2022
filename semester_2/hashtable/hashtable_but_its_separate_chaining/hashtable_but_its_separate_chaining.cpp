@@ -5,7 +5,8 @@
 using namespace std;
 
 int collisions = 0;
-struct Human 
+
+struct Human
 {
 	string Name;
 	string date_of_birth;
@@ -26,17 +27,17 @@ struct Human
 		cout << "-------------------------------------" << endl;
 	}
 };
-string Names[]{"Jeremy","John","James","Jonathan","Jeremaya","Johnny","Fedor","Johan"}; // 8
-string Surnames[]{"Smith","Adams","Bell","Brooks","Dollar","Evans","Ivanov","Foster","Griffin","Hill"}; // 10
-string Street[]{"Prigorodnaya","Wall","Stupid","Apple","Golden Trout Way","Loch Ness Road","Gentle Rain Drive"}; // 7 
-string Cities[]{"St.Petersburg","Moscow","London","Boston","BigMall"}; // 5
+string Names[]{ "Jeremy","John","James","Jonathan","Jeremaya","Johnny","Fedor","Johan" }; // 8
+string Surnames[]{ "Smith","Adams","Bell","Brooks","Dollar","Evans","Ivanov","Foster","Griffin","Hill" }; // 10
+string Street[]{ "Prigorodnaya","Wall","Stupid","Apple","Golden Trout Way","Loch Ness Road","Gentle Rain Drive" }; // 7 
+string Cities[]{ "St.Petersburg","Moscow","London","Boston","BigMall" }; // 5
 string getDateofbirth();
 string getAdress();
 
 Human createPerson()
 {
 	Human person;
-	person.Name = Names[rand() % 8]+' '+Surnames[rand()%10];
+	person.Name = Names[rand() % 8] + ' ' + Surnames[rand() % 10];
 	person.date_of_birth = getDateofbirth();
 	person.adress = getAdress();
 	return person;
@@ -44,24 +45,26 @@ Human createPerson()
 
 struct ListElem
 {
-	int size;
-	ListElem* next;
+	ListElem* next = nullptr;
 	Human data;
 
-	ListElem()
+	void push_back(ListElem* arr_i, Human data)
 	{
-		next = nullptr;
-		size = 0;
-	}
-
-
-	void push_back(Human data)
-	{
+		if (arr_i->next == nullptr)
+		{
+			arr_i->data = data;
+			return;
+		}
 		ListElem* tmp = new ListElem;
 		tmp->data = data;
 		tmp->next = nullptr;
-		next = tmp;
-		size++;
+		ListElem* curr = this;
+
+		while (curr->next != nullptr)
+		{
+			curr = curr->next;
+		}
+		curr->next = tmp;
 	}
 
 	void remove(int pos)
@@ -80,20 +83,22 @@ struct ListElem
 
 struct Hashtable
 {
-	ListElem* arr;
+	ListElem** arr;
 	int size;
 	void init(int size)
 	{
-		arr = new ListElem[size];
-		
+		arr = new ListElem *[size];
+		for (int i = 0; i < size; i++)
+		{
+			arr[i] = new ListElem();
+		}
 		this->size = size;
 	}
-	void put(int index, Human value) 
+	void put(int index, Human value)
 	{
 		// method of separate chaining
-		arr[index].push_back(value);
-		if (arr[index].next != nullptr) {collisions++;}
-		cout << "Element did not fit in the table" << endl; 
+		arr[index]->push_back(arr[index], value);
+		if (arr[index]->next != nullptr) { collisions++; }
 	}
 	int hashfunc(string key)
 	{
@@ -108,27 +113,29 @@ struct Hashtable
 	{
 		for (int i = 0; i < size; i++)
 		{
-			ListElem tmp = arr[i];
-			arr[i].data.showData();
-			while (tmp.next != nullptr)
-			{
-				tmp->data.showData();
-				cout << hashfunc(tmp->data.Name)<< endl;
-				tmp = tmp->next;
-			}
+		//	if (arr[i]->next != nullptr)
+		
+				ListElem* tmp = arr[i];
+				while (tmp->next != nullptr)
+				{
+					tmp->data.showData();
+					cout << hashfunc(tmp->data.Name) << endl;
+					tmp = tmp->next;
+				}
+			
 		}
 	}
 	int find(string key)
 	{
 		int index = hashfunc(key);
 		int pos = 0;
-		ListElem tmp = arr[index];
-		
+		ListElem* tmp = arr[index];
+
 		while (tmp != nullptr)
 		{
-			if (tmp.data.Name == key)
+			if (tmp->data.Name == key)
 				return pos;
-			tmp = tmp.next;
+			tmp = tmp->next;
 			pos++;
 		}
 		return -1;
@@ -139,7 +146,7 @@ struct Hashtable
 		int index = hashfunc(key);
 		if (pos != -1)
 		{
-			arr[index].remove(pos);
+			arr[index]->remove(pos);
 		}
 	}
 };
@@ -148,8 +155,20 @@ struct Hashtable
 string getDateofbirth()
 {
 	int day = rand() % 31 + 1;
-	int month = rand() % 12 + 1; 
+	int month = rand() % 12 + 1;
 	int year = 1970 + rand() % 53;
+	if (month / 10 < 1)
+	{
+		return to_string(day) + '.' + '0' + to_string(month) + '.' + to_string(year);
+	}
+	if (day / 10 < 1)
+	{
+		return '0' + to_string(day) + '.' + to_string(month) + '.' + to_string(year);
+	}
+	if (day / 10 < 1 && month / 10 < 1)
+	{
+		return '0' + to_string(day) + '.' + '0' + to_string(month) + '.' + to_string(year);
+	}
 	return to_string(day) + '.' + to_string(month) + '.' + to_string(year);
 }
 string getAdress()
@@ -174,13 +193,13 @@ int main()
 	table->init(40);
 
 	fillTable(table, 40);
-	
+
 	table->print();
 
 	string key;
 
-	getline(cin,key);
-	cout << key+" " << table->find(key) << endl;
+	getline(cin, key);
+	cout << key + " " << table->find(key) << endl;
 
 	delete[] table->arr;
 	delete table;
@@ -190,8 +209,8 @@ int main()
 
 
 	cout << "next?" << endl;
-	getline(cin,key);
-	if (key != "1") {return 0;}
+	getline(cin, key);
+	if (key != "1") { return 0; }
 	system("cls");
 
 	table = new Hashtable;
@@ -199,11 +218,11 @@ int main()
 
 	collisions = 0;
 	fillTable(table, 75);
-	
+
 	table->print();
 
-	getline(cin,key);
-	cout << key+" " << table->find(key) << endl;
+	getline(cin, key);
+	cout << key + " " << table->find(key) << endl;
 
 	delete[] table->arr;
 	delete table;
@@ -213,8 +232,8 @@ int main()
 
 
 	cout << "next?" << endl;
-	getline(cin,key);
-	if (key != "1") {return 0;}
+	getline(cin, key);
+	if (key != "1") { return 0; }
 	system("cls");
 
 	table = new Hashtable;
@@ -222,11 +241,11 @@ int main()
 
 	collisions = 0;
 	fillTable(table, 90);
-	
+
 	table->print();
 
-	getline(cin,key);
-	cout << key+" " << table->find(key) << endl;
+	getline(cin, key);
+	cout << key + " " << table->find(key) << endl;
 
 	cout << collisions << endl;
 

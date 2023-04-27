@@ -2,24 +2,20 @@
 #include ".\payment.h"
 using namespace std;
 
-
+void print_payment(payment pay)
+{
+	pay.show();
+}
 int main()
 {
-	cout << "First constructor: " << endl;
-	payment p;
-	cout << p.getName() << endl;
-	cout << p.getSalary() << endl;
-	cout << p.getBonus() << endl << endl;
-	p.setName("Sasha");
-	p.setSalary(40000);
-	p.setBonus(4000);
-	cout << "Second constructor: " << endl;
-	payment* p2 = new payment("Leha", 30000, 4000);
-	cout << "This guy called "<< p2->getName() <<" has a salary, which equal to "<< p2->getSalary() << ", and he got a bonus, which is " << p2->getBonus() << endl << endl;
-	payment p3(p);
-	cout << "And the third constructor(copy): " << endl;
-	cout << p.getName() << endl;
-	cout << p.getSalary() << endl;
-	cout << p.getBonus() << endl << endl;
+	payment pay;
+	pay.show();
+	payment pay2("Nikolai", 40000, 5000);
+	pay2.show();
+	payment pay3 = pay2;
+	pay3.setName("Masha");
+	pay3.setSalary(80000);
+	pay3.setBonus(8000);
+	print_payment(pay3);
 	return 0;
 }

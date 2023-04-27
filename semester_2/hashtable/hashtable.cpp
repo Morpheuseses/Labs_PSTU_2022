@@ -152,6 +152,18 @@ string getDateofbirth()
 	int day = rand() % 31 + 1;
 	int month = rand() % 12 + 1;
 	int year = 1970 + rand() % 53;
+	if (month / 10 < 1)
+	{
+		return to_string(day) + '.' + '0' + to_string(month) + '.' + to_string(year);
+	}
+	if (day / 10 < 1)
+	{
+		return '0' + to_string(day) + '.' + to_string(month) + '.' + to_string(year);
+	}
+	if (day / 10 < 1 && month / 10 < 1)
+	{
+		return '0' + to_string(day) + '.' + '0' + to_string(month) + '.' + to_string(year);
+	}
 	return to_string(day) + '.' + to_string(month) + '.' + to_string(year);
 }
 string getAdress()

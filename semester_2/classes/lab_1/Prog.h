@@ -1,11 +1,11 @@
 #include<cmath>
 class Prog
 {
+	int first;
+	double second; // number r
 public:
-	float first;
-	int second;
-	float element(int j)
-	{
-		return first * pow(second,j);
-	}
+	void Read();
+	void Show();
+	void Init(int f, double s);
+	double element(int);
 };
