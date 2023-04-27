@@ -5,152 +5,121 @@ using namespace std;
 List::List()
 {
 	size = 0;
-	Iterator* it = new Iterator;
-	it->elem = nullptr;
-	front = it;
-	end = it;
-	delete it;
+	front = back = nullptr;
 }
-List::List(int n, int data)
-{
-	size = n;
-	Node* tmp = new Node();
-	tmp->data = data;
-	Iterator* it = new Iterator;
-	Node* prev = tmp;
-	tmp = new Node();
-	tmp->data = data;
-	prev->next = tmp;
-	tmp->prev = prev;
-	prev = tmp;
-	it->elem = prev;
-	front = it;
-	for (int i = 0; i < n; i++)
-	{
-		tmp = new Node();
-		tmp->data = data;
-		tmp->prev = prev;
-		prev->next = tmp;
-		prev = tmp;
+List::List(int n, int data) {
 
-	}
-	it->elem = prev;
-	end = it;
-	delete it; 
-}
-List::List(int n)
-{
-	int data;
-	size = n;
-	Node* tmp = new Node();
-	cout << "data?";  cin >> data;
+	front = new Node;
+	front->data = data;
+	Node* tmp = new Node;
 	tmp->data = data;
-	Iterator* it = new Iterator;
-	it->elem = tmp;
-	front = it;
 	Node* prev = tmp;
 	for (int i = 0; i < n; i++)
 	{
-		tmp = new Node();
-		cout << "next?";  cin >> data;
+		tmp = new Node;
 		tmp->data = data;
-		tmp->prev = prev;
 		prev->next = tmp;
 		prev = tmp;
-
 	}
-	it->elem = prev;
-	end = it;
-	delete it;
+	back = prev;
+	size = n;
+	delete prev;
+	delete tmp;
 }
-List::List(const List& l)
-{
+List::List(const List& l) {
+
 	size = l.size;
 	front = l.front;
+	back = l.back;
+	beg = l.beg;
 	end = l.end;
 }
-List::~List()
-{
+void List::push(int data) {
 
-}
-List& List::operator= (const List& l) {
-
-	front = l.front;
-	end = l.end;
-	return *this;
-}
-int& List::operator[] (int index) {
-
-	Iterator* it;
-	if (size - index < size / 2)
+	if (size == 0)
 	{
-		it = front;
-		for (int i = 0; i < size - index; i++)
-		{
-			++it;
-		}
+		front = new Node;
+		front->data = data;
+		back = front;
+		beg.elem = front;
 	}
 	else
 	{
-		it = end;
-		for (int i = 0; i < size - index; i++)
-		{
-			--it;
-		}
+		Node* tmp = new Node;
+		tmp->data = data;
+		back->next = tmp;
+		back = tmp;
 	}
-	return *(*it);
+	end.elem = back;
+	size++;
 }
-int& List::operator()() {
+int List::pop() {
 
-	return size;
+	int data = front->data;
+	Node* tmp = front;
+	front = front->next;
+	size--;
+	delete tmp;
+	beg.elem = front;
+	return data;
 }
-List& List::operator*(const List& l) {
+List::~List() {
 
-	Iterator* it = front;
-	Iterator* it_l = l.front;
-	for (int i = 0; i < size; i++)
+	while (front != nullptr)
+		pop();
+}
+int& List:: operator[](int index) const {
+
+	Node* curr = front;
+	for (int i =0; i < index - 1; i++)
 	{
-		*(*it) = *(*it) * *(*it_l);
-		it++; it_l++;
+		curr = curr->next;
+	}
+	return curr->data;
+}
+List& List::operator= (const List& list) {
+
+	int size_tmp = size;
+	for (int i = 0; i < size_tmp; i++)
+	{
+		this->pop();
+	}
+	for(int i = 0; i < list.size; i++)
+	{
+		this->push(list[i]);
 	}
 	return *this;
 }
-Iterator* List::first() {
+List List::operator * (List& list) {
 
-	return front;
-}
-Iterator* List::last() {
-
-	return end;
-}
-ostream& operator<<(ostream& out, const List& l) {
-
-	List list = l;
-	Iterator* it = list.first();
-	out << *(*it) << " ";
-	for (int i = 0; i < list()-1; i++)
+	List new_list(max(size, list()), 0);
+	for (int i = 0; i < min(size, list()); i++)
 	{
-		out << *(*it) << " ";
-		it++;
+		new_list[i] = (*this)[i] * list[i];
 	}
+	return new_list;
+}
+int List::operator()() {
+
+	return size;
+}
+void List::output(Node* n, ostream& out) {
+
+	out << n->data << " ";
+	if (n == back) {return;}
+	output(n->next, out);
+}
+ostream& operator<< (ostream& out, const List& l) {
+
+	if (l.size == 0) {cout << "List is empty " << endl; return out;}
+	List tmp = l;
+	tmp.output(tmp.front, out);
 	return out;
 }
-istream& operator>>(istream& in, List& l)
-{
-	int s;
-	cout << "elements?"; cin >> s;
-	List list(s);
-	l = list;
-	return in;
-}
-void Iterator::operator+=(const int n) {
+istream& operator>> (istream& in, List& l) {
 
-	Iterator* it = this;
-	int i = n;
-	for (i; i > 0 && it->elem != nullptr; i--)
-	{
-		it++;
-	}
-	if (i == 0) return;
-	it->elem = nullptr;
+	int data;
+	in >> data;
+	l.push(data);
+	return in;
 }

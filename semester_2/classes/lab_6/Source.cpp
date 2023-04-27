@@ -5,12 +5,11 @@ using namespace std;
 int main()
 {
 	List l(5, 0);
-	Iterator* it = l.first();
-	cout << *(*it) << endl;
+	Iterator it = l.first();
 	cout << l << endl;
-	Iterator* i = l.first();
+	Iterator i = l.first();
 	i++;
-	cout << *(*i) << endl;
-	for (i = l.first(); i != l.last(); i++) cout << *(*i) << endl;
+	cout << *i << endl;
+	for (i = l.first(); i != l.last(); i++) cout << *i << endl;
 	return 0;
 }
