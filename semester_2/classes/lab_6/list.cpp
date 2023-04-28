@@ -11,10 +11,9 @@ List::List(int n, int data) {
 
 	front = new Node;
 	front->data = data;
-	Node* tmp = new Node;
-	tmp->data = data;
-	Node* prev = tmp;
-	for (int i = 0; i < n; i++)
+	Node* tmp;
+	Node* prev = front;
+	for (int i = 0; i < n-1; i++)
 	{
 		tmp = new Node;
 		tmp->data = data;
@@ -22,9 +21,9 @@ List::List(int n, int data) {
 		prev = tmp;
 	}
 	back = prev;
+	beg.elem = front;
+	end.elem = back;
 	size = n;
-	delete prev;
-	delete tmp;
 }
 List::List(const List& l) {
 
@@ -103,17 +102,20 @@ int List::operator()() {
 
 	return size;
 }
-void List::output(Node* n, ostream& out) {
+void List::output(Node* n) const {
 
-	out << n->data << " ";
+	cout << n->data << " ";
 	if (n == back) {return;}
-	output(n->next, out);
+	output(n->next);
+}
+void List::show() const {
+
+	if (size == 0) cout << "List is empty " << endl;
+	else output(front);
 }
 ostream& operator<< (ostream& out, const List& l) {
 
-	if (l.size == 0) {cout << "List is empty " << endl; return out;}
-	List tmp = l;
-	tmp.output(tmp.front, out);
+	l.show();
 	return out;
 }
 istream& operator>> (istream& in, List& l) {

@@ -23,14 +23,14 @@ public:
 	Iterator(const Iterator& it) {elem = it.elem;}
 	bool operator == (const Iterator& it) {return elem == it.elem;}
 	bool operator != (const Iterator& it) {return elem != it.elem;}
-	void operator ++ () { elem = elem->next;}
-	void operator ++ (int) {elem = elem->next;}
+	void operator ++ () { elem = elem->next;};
+	void operator ++ (int) {elem = elem->next;};
 	Iterator& operator + (int n) {
 		for (int i =0; i < n && elem->next != nullptr; i++)
 			elem = elem->next;
 		return *this;
 	}
-	int operator * () const { return elem->data;}
+	int operator*() const { return elem->data;}
 };
 class List
 {
@@ -52,7 +52,8 @@ public:
 	int operator()();
 	void push(int );
 	int pop();
-	void output(Node* n, ostream& out);
+	void output(Node* n) const;
+	void show() const;
 	friend ostream& operator<< (ostream& out, const List& l);
 	friend istream& operator>> (istream& in, List& l);
 	Iterator first() { return beg;}
