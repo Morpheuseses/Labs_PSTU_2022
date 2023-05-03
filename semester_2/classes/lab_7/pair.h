@@ -8,6 +8,11 @@ private:
     int first;
     double second;
 public:
+    Pair()
+    {
+        first = 0;
+        second = 0;
+    }
     Pair(int f, double s)
     {
         first = f;
@@ -28,6 +33,13 @@ public:
     void setSecond(double s)
     {
         second = s;
+    }
+    Pair operator * (Pair& p)
+    {
+        Pair tmp(0,0);
+        tmp.first = this->first * p.first;
+        tmp.second = this->second * p.second;
+        return tmp;
     }
     friend ostream& operator<< (ostream& out, const Pair& p) {
         out << p.first << " : " << p.second << endl;
