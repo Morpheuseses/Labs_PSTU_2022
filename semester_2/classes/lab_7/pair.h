@@ -5,8 +5,8 @@ using namespace std;
 class Pair
 {
 private:
-    int first;
-    double second;
+    int first = 0;
+    double second = 0;
 public:
     Pair()
     {
@@ -34,12 +34,17 @@ public:
     {
         second = s;
     }
+    Pair operator= (int n)
+    {
+        first = n;
+        second = n;
+        return *this;
+    } 
     Pair operator * (Pair& p)
     {
-        Pair tmp(0,0);
-        tmp.first = this->first * p.first;
-        tmp.second = this->second * p.second;
-        return tmp;
+        first = this->first * p.first;
+        second = this->second * p.second;
+        return *this;
     }
     friend ostream& operator<< (ostream& out, const Pair& p) {
         out << p.first << " : " << p.second << endl;

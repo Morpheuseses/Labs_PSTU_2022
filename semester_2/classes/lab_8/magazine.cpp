@@ -1,13 +1,16 @@
 #include <iostream>
 #include "magazine.h"
 
-Magazine::Magazine():Print()
+Magazine::Magazine() :Print()
 {
     pages = 0;
 }
-Magazine::Magazine(std::string n, std::string a, int p):Print(n,a)
+Magazine::Magazine(std::string n, std::string a, int p) :Print(n, a)
 {
     pages = p;
+}
+Magazine::~Magazine()
+{
 }
 Magazine::Magazine(const Magazine& m)
 {

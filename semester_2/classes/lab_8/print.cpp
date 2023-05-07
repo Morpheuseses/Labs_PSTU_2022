@@ -52,3 +52,14 @@ void Print::input()
     std::cout << "Name? "; std::cin >> name;
     std::cout << "Author? "; std::cin >> author;
 }
+void Print::HandleEvent(const TEvent& e)
+{
+    if (e.what == evMessage)
+    {
+        switch (e.command)
+        {
+        case cmGet: std:: cout << "Name = " << getName() << std::endl;
+                break;
+        }
+    }
+}

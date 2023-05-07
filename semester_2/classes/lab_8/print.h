@@ -2,7 +2,7 @@
 #include "object.h"
 #include <string>
 
-class Print : public Object 
+class Print : public Object
 {
 protected:
     std::string name;
@@ -12,6 +12,7 @@ public:
     virtual ~Print();
     void show();
     void input();
+    void HandleEvent(const TEvent& e);
     Print(std::string, std::string);
     Print(const Print&);
     std::string getName();

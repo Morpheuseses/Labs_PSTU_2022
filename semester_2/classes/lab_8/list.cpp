@@ -7,13 +7,13 @@ List::List()
 	size = 0;
 	front = back = nullptr;
 }
-List::List(int n, int data) {
+List::List(int n, Object* data) {
 
 	front = new Node;
 	front->data = data;
 	Node* tmp;
 	Node* prev = front;
-	for (int i = 0; i < n-1; i++)
+	for (int i = 0; i < n - 1; i++)
 	{
 		tmp = new Node;
 		tmp->data = data;
@@ -21,8 +21,7 @@ List::List(int n, int data) {
 		prev = tmp;
 	}
 	back = prev;
-	beg.elem = front;
-	end.elem = back;
+
 	size = n;
 }
 List::List(const List& l) {
@@ -30,17 +29,16 @@ List::List(const List& l) {
 	size = l.size;
 	front = l.front;
 	back = l.back;
-	beg = l.beg;
-	end = l.end;
+
 }
-void List::push(int data) {
+void List::push(Object* data) {
 
 	if (size == 0)
 	{
 		front = new Node;
 		front->data = data;
 		back = front;
-		beg.elem = front;
+
 	}
 	else
 	{
@@ -49,17 +47,17 @@ void List::push(int data) {
 		back->next = tmp;
 		back = tmp;
 	}
-	end.elem = back;
+
 	size++;
 }
-int List::pop() {
+Object* List::pop() {
 
-	int data = front->data;
+	Object* data = front->data;
 	Node* tmp = front;
 	front = front->next;
 	size--;
 	delete tmp;
-	beg.elem = front;
+
 	return data;
 }
 List::~List() {
@@ -67,10 +65,49 @@ List::~List() {
 	while (front != nullptr)
 		pop();
 }
-int& List:: operator[](int index) const {
+void List::Add()
+{
+	Object* p;
+	cout << "1.Print" << endl;
+	cout << "2.Magazine" << endl;
+	int c;
+	cin >> c;
+	if (c==1)
+	{
+		Print* print = new Print;
+		print->input();
+		p = print;
+		push(p);
+		size++;
+	}
+	else if (c == 2)
+	{
+		Magazine* mag = new Magazine;
+		mag->input();
+		p = mag;
+		push(p);
+		size++;
+	}
+}
+void List::Del()
+{
+	if (size == 0) return;
+	pop();
+}
+void List::Make(int s)
+{
+	size = s;
+	Print* data = new Print();
+	List* l = new List(size, data);
+	front = l->getFront();
+	back = l->getBack();
+	delete l;
+	delete data;
+}
+Object*& List:: operator[](int index) const {
 
 	Node* curr = front;
-	for (int i =0; i < index - 1; i++)
+	for (int i = 0; i < index - 1; i++)
 	{
 		curr = curr->next;
 	}
@@ -83,20 +120,11 @@ List& List::operator= (const List& list) {
 	{
 		this->pop();
 	}
-	for(int i = 0; i < list.size; i++)
+	for (int i = 0; i < list.size; i++)
 	{
 		this->push(list[i]);
 	}
 	return *this;
-}
-List List::operator * (List& list) {
-
-	List new_list(max(size, list.size), 0);
-	for (int i = 0; i < min(size, list()); i++)
-	{
-		new_list[i] = (*this)[i] * list[i];
-	}
-	return new_list;
 }
 int List::operator()() {
 
@@ -104,8 +132,8 @@ int List::operator()() {
 }
 void List::output(Node* n) const {
 
-	cout << n->data << " ";
-	if (n == back) {return;}
+	n->data->show();
+	if (n == back) { return; }
 	output(n->next);
 }
 void List::show() const {
@@ -113,15 +141,19 @@ void List::show() const {
 	if (size == 0) cout << "List is empty " << endl;
 	else output(front);
 }
+void List::HandleEvent(const TEvent& e)
+{
+	if (e.what == evMessage)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			Object* p = (*this)[i];
+			p->HandleEvent(e);
+		}
+	}
+}
 ostream& operator<< (ostream& out, const List& l) {
 
 	l.show();
 	return out;
-}
-istream& operator>> (istream& in, List& l) {
-
-	int data;
-	in >> data;
-	l.push(data);
-	return in;
 }

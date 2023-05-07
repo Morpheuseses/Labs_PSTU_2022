@@ -12,5 +12,7 @@ int main()
 	i++;
 	cout << *i << endl;
 	for (i = l.first(); i != l.last(); i++) cout << *i << ' ';
+	List l1(5,5);
+	cout << '\n' << l * l1 << endl;
 	return 0;
 }

@@ -1,7 +1,7 @@
 #pragma once 
 #include "print.h"
 
-class Magazine : public Print 
+class Magazine : public Print
 {
 protected:
     int pages;
@@ -14,5 +14,5 @@ public:
     void input();
     int getPages();
     void setPages(int);
-    Magazine& operator = (const Magazine& );
+    Magazine& operator = (const Magazine&);
 };

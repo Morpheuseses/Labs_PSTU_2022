@@ -88,7 +88,6 @@ public:
 	}
 	List<T> operator * (List<T>& list)
 	{
-		T data();
 		int new_size = max(size, list());
 		List<T> new_list(new_size, data);
 		for (int i = 0; i < min(size, list()); i++)
