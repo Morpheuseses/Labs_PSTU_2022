@@ -1,3 +1,5 @@
+#pragma once
+#include <iostream>
 #include "stack.h"
 
 Stack::Stack()
@@ -10,7 +12,7 @@ Stack::Stack(int n, int data)
     head = new Node;
     head->data = data;
     Node* prev = head;
-    for (auto i = 0; i < n; i++)
+    for (int  i = 0; i < n; i++)
     {
         head = new Node;
         head->data = data;
@@ -95,26 +97,31 @@ int Stack::searchElem(int value)
 Stack& Stack::operator= (Stack& s)
 {
     Stack* tmp = new Stack;
-    int init_size = s.size;
-    for (int i = 0; i < init_size; i++)
+    Node* curr = s.head;
+    for (int i = 0; i < s.size && curr != nullptr; i++)
     {
-        tmp->push(s.head->data);
-        s.pop();
+        tmp->push(curr->data);
+        curr = curr->next;
     }
     Stack* tmp2 = new Stack;
-    for (int i = 0; i < size; i++)
+    int tmp_size = tmp->size;
+    for (int i = 0; i< tmp_size; i++)
     {
-        tmp2->push(s.head->data)
-        
+        tmp2->push(tmp->head->data);
+        tmp->pop();
     }
+    return *tmp2;
 }
 std::ostream& operator<< (std::ostream& out, const Stack s)
 {
-    Stack* tmp = new Stack;
-    tmp->head = s.head;
-    tmp->size = s.size;
-    out << "Top -> ";
-    
-       out << tmp->pop() << " ";
+    if (s.size == 0) {std::cout << "Stack is empty" << std::endl; return out;}
+    Node* curr = s.head;
+    out << "Top-> ";
+    for (int i =0; i < s.size; i++)
+    {
+        out << curr->getData() << " ";
+        curr = curr->getNode();
+    }
     out << "-> Bottom\n";
+    return out;
 }
