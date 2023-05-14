@@ -69,11 +69,11 @@ void Dialog::HandleEvent(TEvent& event)
 	{
 		switch (event.command)
 		{
-		case cmMake: // переделать 
+		case cmMake: // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
 
 			ClearEvent(event);
 			break;
-		case cmAdd: // переделать
+		case cmAdd: // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			Add();
 			ClearEvent(event);
 			break;
@@ -81,7 +81,6 @@ void Dialog::HandleEvent(TEvent& event)
 			Del();
 			ClearEvent(event);
 			break;
-		
 		case cmShow:
 			show();
 			ClearEvent(event);

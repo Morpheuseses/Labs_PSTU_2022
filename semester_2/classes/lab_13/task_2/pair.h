@@ -1,3 +1,4 @@
+#pragma once
 #pragma once 
 #include<iostream>
 #include<ctime>
@@ -23,8 +24,9 @@ public:
 	Pair& operator+ (double x);
 	bool operator > (const Pair& p);
 	bool operator < (const Pair& p) const;
-	bool operator!= (Pair& p);
+	bool operator!= ( const Pair& p);
 	Pair& operator+ (Pair& p);
+	Pair& operator+ (const Pair& p);
 	Pair& operator/ (int n);
 	void randomize();
 	Pair& operator+= (const Pair& p);

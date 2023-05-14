@@ -61,7 +61,7 @@ ostream& operator<< (ostream& out, const Pair& p)
 }
 istream& operator>> (istream& in, Pair& p)
 {
-	
+
 	cout << "first?"; in >> p.first;
 	cout << "second?"; in >> p.second;
 	return in;
@@ -72,7 +72,7 @@ void Pair::randomize()
 	double f = (double)rand();
 	second = 50 + f;
 }
-Pair& Pair::operator+= ( const Pair& p)
+Pair& Pair::operator+= (const Pair& p)
 {
 	first += p.first;
 	second += p.second;
@@ -92,6 +92,12 @@ Pair& Pair::operator+ (Pair& p)
 {
 	first += p.getFirst();
 	second += p.getSecond();
+	return *this;
+}
+Pair& Pair::operator+ (const Pair& p)
+{
+	first += p.first;
+	second += p.second;
 	return *this;
 }
 bool Pair::operator!= (Pair& p)
