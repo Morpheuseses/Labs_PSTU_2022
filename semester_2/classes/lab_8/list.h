@@ -13,7 +13,6 @@ protected:
 };
 class List
 {
-	friend class Iterator;
 protected:
 	int size;
 	Node* front;

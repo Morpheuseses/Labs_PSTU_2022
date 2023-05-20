@@ -8,14 +8,12 @@ const int MAX_SIZE = 30;
 class Node
 {
 	friend class List;
-	friend class Iterator;
 private:
 	int data = 0;
 	Node* next = nullptr;
 };
 class List
 {
-	friend class Iterator;
 private:
 	int size;
 	Node* front;
