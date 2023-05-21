@@ -87,10 +87,9 @@ struct Hashtable
 	int size;
 	void init(int size)
 	{
-		arr = new ListElem *[size];
 		for (int i = 0; i < size; i++)
 		{
-			arr[i] = new ListElem();
+			arr[i] = new ListElem[size];
 		}
 		this->size = size;
 	}
