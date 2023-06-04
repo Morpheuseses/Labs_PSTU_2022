@@ -1,5 +1,5 @@
-#ifndef PRIORITY_QUEUE_H
-#define PRIORITY_QUEUE_H
+#ifndef PRIORITYQUEUE_H
+#define PRIORITYQUEUE_H
 
 #include <QQueue>
 #include <QDebug>
@@ -64,5 +64,4 @@ private:
     QQueue< Item<T > > _queue;
 
 };
-
-#endif // PRIORITY_QUEUE_H
+#endif // PRIORITYQUEUE_H

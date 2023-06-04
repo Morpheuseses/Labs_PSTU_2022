@@ -1,67 +1,34 @@
 #ifndef VERTEX_H
 #define VERTEX_H
 
-#include <graph.h>
+#include<QGraphicsItem>
+#include<QGraphicsEllipseItem>
+#include<QGraphicsTextItem>
+#include<QGraphicsLineItem>
+#include<QBrush>
+#include<QPen>
+#include<QColor>
+#include<QFont>
+#include<QString>
 
-#include <QMainWindow>
-#include <QGraphicsItem>
-#include <QVector>
-#include <QPointF>
-#include <QGraphicsView>
-#include <QWidget>
-#include <QStyleOptionGraphicsItem>
-#include <QKeyEvent>
+#include<QDebug>
 
-class vertex;
-class Edge;
-class Graph;
 
-class Vertex : public QGraphicsItem {
+
+class Vertex
+{
 public:
 
-    Vertex(Graph *graph, int index);
+    unsigned int Number;
+    int x = 0;
+    int y = 0;
+
+    QGraphicsEllipseItem* circle = nullptr;
+    QGraphicsTextItem* nameOfTop = nullptr;
+
+    Vertex(int x, int y, unsigned int number);
+
     ~Vertex();
-    void addEdge(Edge* edge);
-    QVector<Edge *> getEdges() const;
-
-    void calculateForces();
-    bool advancePosition();
-
-    QString getColor();
-    void setColor(QString color);
-    int getDegree();
-    int getIndex();
-    void setIndex(int index);
-    QString getName();
-    void setName(QString name);
-    void setPosition(double xvel, double yvel);
-    void insertEdge(int dest, double weight);
-    bool pathExist(int dest);
-    void updateWeight(int dest, double weight);
-    void eraseEdge(int dest);
-    void clearEdge();
-    void changeEdgeColor(int dest);
-    QPointF getPos();
-
-    QRectF boundingRect() const override;
-    QPainterPath shape() const override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-
-
-protected:
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
-
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
-
-private:
-    int vertexIndex;
-    QString name;
-    int degree;
-    QVector<Edge *> edgeList;
-    QPointF newPos;
-    Graph *graph;
-    QString color;
 };
 
 #endif // VERTEX_H
